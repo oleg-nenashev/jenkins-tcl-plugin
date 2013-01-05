@@ -22,8 +22,8 @@ import java.io.IOException;
 /**
  * Implements builder for Tcl Scripts.
  * <p>
- *     Supports execution of Tcl scripts and provides access to jenkins variables.
- *     See TODOs for other functionality
+ * Supports execution of Tcl scripts and provides access to jenkins variables.
+ * See TODOs for other functionality
  * </p>
  *
  * @author Oleg Nenashev <o.v.nenashev@gmail.com>
@@ -33,15 +33,11 @@ public class TclScriptBuilder extends Builder {
     private String script;
     private static final String TEST_SCRIPT = "set a \"Hello, world!\"; puts $a;";
 
-    // Fields in config.jelly must match the parameter names in the "DataBoundConstructor"
     @DataBoundConstructor
     public TclScriptBuilder(String script) {
         this.script = script;
     }
 
-    /**
-     * We'll use this from the <tt>config.jelly</tt>.
-     */
     public String getScript() {
         return script;
     }
@@ -49,29 +45,21 @@ public class TclScriptBuilder extends Builder {
     @Override
     public boolean perform(AbstractBuild build, Launcher launcher, BuildListener listener)
             throws AbortException {
+
         try {
-            TclDriver driver = new TclDriver(build, launcher, listener);
+            TclDriver driver = new TclDriver(build, launcher, listener, this);
             String res = driver.Execute(script != null ? script : TEST_SCRIPT);
             if (res != null && res.length() > 0) {
                 listener.getLogger().println(res);
             }
         } catch (TclException ex) {
             ex.printStackTrace();
-
-            String msg = ex.getMessage();
-            if (msg.isEmpty()) {
-                //TODO: error reporting
-            }
-
             throw new AbortException("Tcl execution failed: " + ex.getMessage());
         }
 
         return true;
     }
 
-    // Overridden for better type safety.
-    // If your plugin doesn't really define any property on Descriptor,
-    // you don't have to do this.
     @Override
     public DescriptorImpl getDescriptor() {
         return (DescriptorImpl) super.getDescriptor();
@@ -115,12 +103,8 @@ public class TclScriptBuilder extends Builder {
 
         @Override
         public boolean configure(StaplerRequest req, JSONObject formData) throws FormException {
-            // To persist global configuration information,
-            // set that to properties and call save().
-            // useFrench = formData.getBoolean("useFrench");
-            // ^Can also use req.bindJSON(this, formData);
-            //  (easier when there are many fields; need set* methods for this, like setUseFrench)
             save();
+            //TODO: remove or add global configuration options
             return super.configure(req, formData);
         }
     }

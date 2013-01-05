@@ -17,22 +17,22 @@ import tcl.lang.WrappedCommand;
 
 /**
  * Implements jtcl command resolver.
- *
+ * <p/>
  * <p>
  * Commands can be registered via registerCommand()
  * All commands are stored at one namespace.
  * </p>
  *
- * @see ITclCommand
  * @author Oleg Nenashev <o.v.nenashev@gmail.com>
+ * @see ITclCommand
  */
-public class OblCommandResolver implements Resolver {
+public class jTclCommandResolver implements Resolver {
     private String commandNamespace;
     private tcl.lang.Interp tclInterp;
     private HashMap<String, ITclCommand> commandSet;
     private HashMap<String, Var> variableSet;
 
-    public OblCommandResolver(tcl.lang.Interp interp, String namespace) {
+    public jTclCommandResolver(tcl.lang.Interp interp, String namespace) {
         tclInterp = interp;
         commandNamespace = namespace;
         commandSet = new HashMap<String, ITclCommand>();
@@ -61,7 +61,7 @@ public class OblCommandResolver implements Resolver {
         String funcName = extractFuncName(string);
         if (commandSet.containsKey(funcName)) {
             WrappedCommand res = new WrappedCommand();
-            res.cmd = new OblCommandExecutor(commandSet.get(funcName));
+            res.cmd = new jTclCommandWrapper(commandSet.get(funcName));
             return res;
         } else return null;
     }

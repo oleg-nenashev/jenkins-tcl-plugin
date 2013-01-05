@@ -1,11 +1,12 @@
 package org.jenkinsci.plugins.tcl.commandHandlers;
 
 /**
- * Contains
+ * Container of build-in Tcl commands
  */
 public enum TclPluginHandler {
     GET_VERSION(TclGetVersion.class);
 
+    // Internals
     ITclCommand command;
 
     TclPluginHandler(Class<? extends ITclCommand> commandClass) {

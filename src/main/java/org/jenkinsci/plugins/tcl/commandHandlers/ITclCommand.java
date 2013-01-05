@@ -1,14 +1,23 @@
 package org.jenkinsci.plugins.tcl.commandHandlers;
 
+import tcl.lang.TclException;
+
 /**
- * Created with IntelliJ IDEA.
- * User: onenashev
- * Date: 02.01.13
- * Time: 12:46
- * To change this template use File | Settings | File Templates.
+ * Tcl Command Handler interface. Supported by jTclCommandResolver
+ * @see org.jenkinsci.plugins.tcl.interpreter.jTclCommandResolver
  */
 public interface ITclCommand {
-    public String Execute(String argStr);
 
+    /**
+     * Execute command and return result
+     * @param argStr
+     * @return
+     */
+    public String Execute(String argStr) throws TclException;
+
+    /**
+     *
+     * @return Command name
+     */
     public String Name();
 }
