@@ -4,19 +4,18 @@
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
-        <version>1.496</version>
+        <version>1.466</version>
         <!-- which version of Jenkins is this plugin built against? -->
     </parent>
 
     <groupId>org.jenkins-ci.plugins</groupId>
     <artifactId>tcl</artifactId>
-    <version>0.1</version>
+    <version>0.1-SNAPSHOT</version>
     <packaging>hpi</packaging>
 
     <properties>
         <jTclVersion>2.2.0</jTclVersion>
     </properties>
-
 
     <build>
         <plugins>
@@ -30,7 +29,7 @@
 
                         <configuration>
                             <includeArtifactIds>jtcl</includeArtifactIds>
-                        <!--    <outputDirectory>${webapp.output}/WEB-INF/lib</outputDirectory>       -->
+                            <outputDirectory>${webapp.output}/WEB-INF/lib</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
@@ -43,9 +42,9 @@
             <groupId>tcl.lang</groupId>
             <artifactId>jtcl</artifactId>
             <version>${jTclVersion}</version>
-           <!-- <type>jar</type>
+            <type>jar</type>
             <scope>system</scope>
-            <systemPath>${basedir}/lib/jtcl-${jTclVersion}.jar</systemPath>   -->
+            <systemPath>${basedir}/lib/jtcl-${jTclVersion}.jar</systemPath>
         </dependency>
     </dependencies>
 
@@ -55,11 +54,6 @@
             <id>repo.jenkins-ci.org</id>
             <url>http://repo.jenkins-ci.org/public/</url>
         </repository>
-        <repository>
-            <id>local</id>
-            <url>file://C:\Users\onenashev\Documents\Jenkins\repo</url>
-        </repository>
-
     </repositories>
 
     <pluginRepositories>
@@ -69,8 +63,17 @@
         </pluginRepository>
     </pluginRepositories>
 
+    <scm>
+        <connection>scm:git:ssh://github.com/jenkinsci/tcl-plugin.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/jenkinsci/tcl-plugin.git</developerConnection>
+        <url>https://github.com/jenkinsci/tcl-plugin</url>
+    </scm>
+
+    <url>http://wiki.jenkins-ci.org/display/JENKINS/My+Plugin</url>
+
     <developers>
         <developer>
+            <id>oleg_nenashev</id>
             <name>Oleg Nenashev</name>
             <email>o.v.nenashev@gmail.com</email>
             <url>linkedin.com/in/onenashev/</url>
