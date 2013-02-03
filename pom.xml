@@ -68,7 +68,7 @@
         <url>https://github.com/jenkinsci/tcl-plugin</url>
     </scm>
 
-    <url>http://wiki.jenkins-ci.org/display/JENKINS/My+Plugin</url>
+    <url>https://wiki.jenkins-ci.org/display/JENKINS/Tcl+plugin</url>
 
     <developers>
         <developer>
