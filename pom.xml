@@ -63,7 +63,7 @@
     </pluginRepositories>
 
     <scm>
-        <connection>scm:git:ssh://github.com/jenkinsci/tcl-plugin.git</connection>
+        <connection>scm:git:ssh://git@github.com/jenkinsci/tcl-plugin.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/jenkinsci/tcl-plugin.git</developerConnection>
         <url>https://github.com/jenkinsci/tcl-plugin</url>
     </scm>
