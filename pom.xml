@@ -8,7 +8,7 @@
 
     <groupId>org.jenkins-ci.plugins</groupId>
     <artifactId>tcl</artifactId>
-    <version>0.4-SNAPSHOT</version>
+    <version>0.4</version>
     <description>Provides Tcl script buildstep</description>
     <packaging>hpi</packaging>
     <url>https://wiki.jenkins-ci.org/display/JENKINS/Tcl+plugin</url>
