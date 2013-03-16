@@ -4,50 +4,35 @@
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
         <version>1.466</version>
-        <!-- which version of Jenkins is this plugin built against? -->
     </parent>
 
     <groupId>org.jenkins-ci.plugins</groupId>
     <artifactId>tcl</artifactId>
     <version>0.4-SNAPSHOT</version>
+    <description>Provides Tcl script buildstep</description>
     <packaging>hpi</packaging>
+    <url>https://wiki.jenkins-ci.org/display/JENKINS/Tcl+plugin</url>
 
+    <developers>
+        <developer>
+            <id>oleg_nenashev</id>
+            <name>Oleg Nenashev</name>
+            <email>o.v.nenashev@gmail.com</email>
+            <url>linkedin.com/in/onenashev/</url>
+        </developer>
+    </developers>
+    
+    <licenses>
+        <license />
+    </licenses>
+    
+    <!-- PROPERTIES -->
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <jTclVersion>2.2.0</jTclVersion>
     </properties>
 
-    <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-
-                        <configuration>
-                            <includeArtifactIds>jtcl</includeArtifactIds>
-                            <outputDirectory>${webapp.output}/WEB-INF/lib</outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
-
-    <dependencies>
-        <dependency>
-            <groupId>tcl.lang</groupId>
-            <artifactId>jtcl</artifactId>
-            <version>${jTclVersion}</version>
-            <type>jar</type>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/jtcl-${jTclVersion}.jar</systemPath>
-        </dependency>
-    </dependencies>
-
-    <!-- get every artifact through repo.jenkins-ci.org, which proxies all the artifacts that we need -->
     <repositories>
         <repository>
             <id>repo.jenkins-ci.org</id>
@@ -68,18 +53,66 @@
         <url>https://github.com/jenkinsci/tcl-plugin</url>
     </scm>
 
-    <url>https://wiki.jenkins-ci.org/display/JENKINS/Tcl+plugin</url>
+    <!-- BUILD -->
+    <dependencies>
+        <dependency>
+            <groupId>tcl.lang</groupId>
+            <artifactId>jtcl</artifactId>
+            <version>${jTclVersion}</version>
+            <type>jar</type>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/jtcl-${jTclVersion}.jar</systemPath>
+        </dependency>
+    </dependencies>
+    
+    <build>
+      <!-- @fixme: manual copy of libraries to hpi. Why does autosearch fails? -->
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.0</version>
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <includeTypes>jar</includeTypes>
+                            <includeArtifactIds>jtcl</includeArtifactIds>
+                            <outputDirectory>${project.build.directory}/${project.artifactId}/WEB-INF/lib</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 
-    <developers>
-        <developer>
-            <id>oleg_nenashev</id>
-            <name>Oleg Nenashev</name>
-            <email>o.v.nenashev@gmail.com</email>
-            <url>linkedin.com/in/onenashev/</url>
-        </developer>
-    </developers>
-
-    <licenses>
-        <license />
-    </licenses>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/${project.artifactId}/WEB-INF/lib</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>target/</directory>
+                                    <includes>
+                                        <include>tcl.jar</include>
+                                    </includes>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>   
 </project>
