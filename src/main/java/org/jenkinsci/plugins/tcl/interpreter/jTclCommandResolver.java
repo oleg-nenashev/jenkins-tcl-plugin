@@ -1,8 +1,26 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * The MIT License
+ *
+ * Copyright 2013 Oleg Nenashev <o.v.nenashev@gmail.com>
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  */
-
 package org.jenkinsci.plugins.tcl.interpreter;
 
 import java.util.HashMap;
@@ -17,11 +35,8 @@ import tcl.lang.WrappedCommand;
 
 /**
  * Implements jtcl command resolver.
- * <p/>
- * <p>
  * Commands can be registered via registerCommand()
  * All commands are stored at one namespace.
- * </p>
  *
  * @author Oleg Nenashev <o.v.nenashev@gmail.com>
  * @see ITclCommand
@@ -53,6 +68,7 @@ public class jTclCommandResolver implements Resolver {
         }
     }
 
+    @Override
     public WrappedCommand resolveCmd(Interp interp,
                                      String string, Namespace nmspc, int i) throws TclException {
         if (!checkNamespace(string, nmspc))
@@ -66,6 +82,7 @@ public class jTclCommandResolver implements Resolver {
         } else return null;
     }
 
+    @Override
     public Var resolveVar(Interp interp,
                           String string, Namespace nmspc, int i) throws TclException {
         //TODO: add support of variables
