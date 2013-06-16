@@ -24,6 +24,12 @@
 package org.jenkinsci.plugins.tcl;
 
 import hudson.EnvVars;
+import hudson.model.AbstractBuild;
+import hudson.model.Hudson;
+import hudson.model.TaskListener;
+import hudson.slaves.EnvironmentVariablesNodeProperty;
+import hudson.slaves.NodeProperty;
+import java.io.IOException;
 import org.jenkinsci.plugins.tcl.interpreter.jTclException;
 import tcl.lang.*;
 
@@ -34,11 +40,13 @@ import java.util.Map;
  */
 public class jTclEnvResolver implements Resolver {
     private TclDriver driver;
-    private EnvVars envVars;
+    private AbstractBuild build;
+    private TaskListener listener;
 
-    public jTclEnvResolver(TclDriver driver, EnvVars envVars) {
+    public jTclEnvResolver(TclDriver driver, AbstractBuild build, TaskListener listener) {
         this.driver = driver;
-        this.envVars = envVars;
+        this.build = build;
+        this.listener = listener;
     }
 
     public WrappedCommand resolveCmd(Interp interp, String s, Namespace namespace, int i) throws TclException {
@@ -48,18 +56,52 @@ public class jTclEnvResolver implements Resolver {
     public Var resolveVar(Interp interp, String s, Namespace namespace, int i) throws TclException {
 
         if (namespace.fullName.equals("::")) {
+            Var res = null;
+            
             // build parameters
             Map<String, String> buildVariables = driver.getBuildInfo().getBuildVariables();
             if (buildVariables.containsKey(s)) {
                 return CreateConstScalarVar(interp, s, buildVariables.get(s));
             }
 
-            // env parameters
-            if (envVars.containsKey(s)) {
-                return CreateConstScalarVar(interp, s, envVars.get(s));
+            // Environment parameters
+            try {
+                EnvVars envVars = build.getEnvironment(listener);
+                if (envVars.containsKey(s)) {
+                    return CreateConstScalarVar(interp, s, envVars.get(s));
+                }
+            } catch(Exception ex) {
+                throw new jTclException("Can't process environment vars", ex);
+            }
+            
+            // get global properties
+            for (NodeProperty nodeProperty: Hudson.getInstance().getGlobalNodeProperties()) {
+                if (nodeProperty instanceof EnvironmentVariablesNodeProperty) {
+                    EnvironmentVariablesNodeProperty vars = (EnvironmentVariablesNodeProperty)nodeProperty;
+                    Var var = getVar(interp, s, vars.getEnvVars());
+                    if (var!=null) return var;
+                }
+            }
+            
+            // get node-specific global properties
+            for (NodeProperty nodeProperty : build.getBuiltOn().getNodeProperties()) {
+                if (nodeProperty instanceof EnvironmentVariablesNodeProperty) {
+                                EnvironmentVariablesNodeProperty vars = (EnvironmentVariablesNodeProperty)nodeProperty;
+                    Var var = getVar(interp, s, vars.getEnvVars());
+                    if (var!=null) return var;
+                }
             }
         }
 
+        return null;
+    }
+    
+    private static Var getVar(Interp interp, String varName, EnvVars envVars) 
+            throws TclException
+    {
+        if (envVars.containsKey(varName)) {
+            return CreateConstScalarVar(interp, varName, envVars.get(varName));
+        } 
         return null;
     }
 

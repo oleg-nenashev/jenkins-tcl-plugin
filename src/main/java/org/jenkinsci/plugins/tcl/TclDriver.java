@@ -91,7 +91,7 @@ public class TclDriver extends jTclTTY {
         // Add resolver
         commandResolver = new jTclCommandResolver(super.getInterpreter(), JENKINS_NAMESPACE);
         super.getInterpreter().addInterpResolver("JenkinsResolver", commandResolver);
-        super.getInterpreter().addInterpResolver("Env resolver", new jTclEnvResolver(this, build.getCharacteristicEnvVars()));
+        super.getInterpreter().addInterpResolver("Env resolver", new jTclEnvResolver(this, build, listener));
 
         // Add jenkins namespace and resolver
         Namespace nm = Namespace.createNamespace(super.getInterpreter(), JENKINS_NAMESPACE, null);
