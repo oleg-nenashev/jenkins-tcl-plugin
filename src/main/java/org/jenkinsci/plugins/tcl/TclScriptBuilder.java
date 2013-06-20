@@ -41,7 +41,6 @@ import tcl.lang.TclException;
 import javax.servlet.ServletException;
 import java.io.IOException;
 
-
 /**
  * Implements builder for Tcl Scripts.
  * <p>
@@ -61,6 +60,11 @@ public class TclScriptBuilder extends Builder {
         this.script = script;
     }
 
+    /**
+     * Gets Tcl script, which should be executed.
+     * Parameters won't be substituted.
+     * @return Tcl script
+     */
     public String getScript() {
         return script;
     }
@@ -112,14 +116,13 @@ public class TclScriptBuilder extends Builder {
             return FormValidation.ok();
         }
 
+        @Override
         public boolean isApplicable(Class<? extends AbstractProject> aClass) {
             // Indicates that this builder can be used with all kinds of project types 
             return true;
         }
 
-        /**
-         * This human readable name is used in the configuration screen.
-         */
+        @Override
         public String getDisplayName() {
             return "Execute Tcl script";
         }

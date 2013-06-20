@@ -29,14 +29,14 @@ import hudson.model.Hudson;
 import hudson.model.TaskListener;
 import hudson.slaves.EnvironmentVariablesNodeProperty;
 import hudson.slaves.NodeProperty;
-import java.io.IOException;
 import org.jenkinsci.plugins.tcl.interpreter.jTclException;
 import tcl.lang.*;
 
 import java.util.Map;
 
 /**
- * Resolver for Jenkins variables
+ * Resolver for Jenkins variables.
+ * @author Oleg Nenashev <o.v.nenashev@gmail.com>
  */
 public class jTclEnvResolver implements Resolver {
     private TclDriver driver;
@@ -49,15 +49,15 @@ public class jTclEnvResolver implements Resolver {
         this.listener = listener;
     }
 
+    @Override
     public WrappedCommand resolveCmd(Interp interp, String s, Namespace namespace, int i) throws TclException {
         return null;
     }
 
+    @Override
     public Var resolveVar(Interp interp, String s, Namespace namespace, int i) throws TclException {
 
         if (namespace.fullName.equals("::")) {
-            Var res = null;
-            
             // build parameters
             Map<String, String> buildVariables = driver.getBuildInfo().getBuildVariables();
             if (buildVariables.containsKey(s)) {
@@ -96,6 +96,14 @@ public class jTclEnvResolver implements Resolver {
         return null;
     }
     
+    /**
+     * Try to substitute variables from EnvVars
+     * @param interp Tcl interpreter
+     * @param varName Variable name
+     * @param envVars  Collection of environment variables
+     * @return Variable or null
+     * @throws TclException Interpreter exception
+     */
     private static Var getVar(Interp interp, String varName, EnvVars envVars) 
             throws TclException
     {

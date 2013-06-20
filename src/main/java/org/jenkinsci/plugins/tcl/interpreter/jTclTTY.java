@@ -32,6 +32,7 @@ import tcl.lang.TclException;
 import tcl.lang.channel.Channel;
 
 /**
+ * jTcl interpreter wrapper.
  * @author Oleg Nenashev <o.v.nenashev@gmail.com>
  */
 public class jTclTTY {
@@ -51,7 +52,6 @@ public class jTclTTY {
         interp = new Interp();
         interp.setVar("env", "TCL_CLASSPATH", "C:\\Users\\onenashev\\Documents\\Jenkins\\tcl-plugin\\tcl\\lib", 0);
 
-        boolean isValid = false;
         try {
             if (workingDirectory.exists() && workingDirectory.isDirectory()) {
                 interp.setWorkingDir(workingDirectory.toString());
@@ -66,7 +66,6 @@ public class jTclTTY {
     }
 
     public String Execute(String command) throws TclException {
-        String result;
         interp.eval(command);
         return interp.getResult().toString();
     }
@@ -110,8 +109,7 @@ public class jTclTTY {
     }
 
     /**
-     * Overwrite default(std) IO channel
-     *
+     * Overwrite default(std) IO channel.
      * @param type    Type of the channel
      * @param channel New Channel
      */

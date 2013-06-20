@@ -36,7 +36,8 @@ import tcl.lang.Namespace;
 import java.io.*;
 
 /**
- * Tcl driver that integrates jTclTTY with jenkins build environment
+ * Tcl driver that integrates jTclTTY with Jenkins build environment
+ * @author Oleg Nenashev <o.v.nenashev@gmail.com>
  */
 //TODO: Incapsulate jTclTTY
 public class TclDriver extends jTclTTY {
@@ -64,16 +65,15 @@ public class TclDriver extends jTclTTY {
     }
 
     /**
-     * Construct and initializes Tcl environment
-     *
+     * Construct and initialize Tcl environment.
      * <p>
      * Function overwrites Thread.ClassLoader by Class.ClassLoader due to jenkins dependency loader specific
      * ( more info - http://jenkins.361315.n4.nabble.com/ClassLoader-in-plugins-td1470791.html )
      * </p>
      *
-     * @param build
-     * @param launcher
-     * @param listener
+     * @param build Related build
+     * @param launcher Build launcher
+     * @param listener Build listener
      * @throws TclException Error occurred in jtcl or its wrapper
      */
     public TclDriver(AbstractBuild build, Launcher launcher, BuildListener listener, Builder buildInstance)
@@ -131,5 +131,14 @@ public class TclDriver extends jTclTTY {
 
     public AbstractBuild getBuildInfo() {
         return build;
+    }
+
+    /**
+     * Get builder.
+     * @since 0.5
+     * @return Builder, for which interpreter is configured.
+     */
+    public Builder getBuilderInstance() {
+        return builderInstance;
     }
 }
