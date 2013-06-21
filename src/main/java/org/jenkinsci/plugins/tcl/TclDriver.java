@@ -34,6 +34,7 @@ import tcl.lang.TclException;
 import tcl.lang.Namespace;
 
 import java.io.*;
+import org.jenkinsci.plugins.tcl.util.ITclLogger;
 
 /**
  * Tcl driver that integrates jTclTTY with Jenkins build environment
@@ -43,24 +44,24 @@ import java.io.*;
 public class TclDriver extends jTclTTY {
     public final static String JENKINS_NAMESPACE = "jenkins";
 
-    private BuildListener listener;
     private Launcher buildLauncher;
     private AbstractBuild build;
     private Builder builderInstance;
+    private ITclLogger logger;
 
     jTclCommandResolver commandResolver;
 
     public class StdErr extends StringOutputStream {
         @Override
         public void WriteLine(String str) throws IOException {
-            TclDriver.this.listener.error(str);
+            TclDriver.this.logger.logError(str);
         }
     }
 
     public class StdOut extends StringOutputStream {
         @Override
         public void WriteLine(String str) throws IOException {
-            TclDriver.this.listener.getLogger().println(str);
+            TclDriver.this.logger.logMessage(str);
         }
     }
 
@@ -76,11 +77,11 @@ public class TclDriver extends jTclTTY {
      * @param listener Build listener
      * @throws TclException Error occurred in jtcl or its wrapper
      */
-    public TclDriver(AbstractBuild build, Launcher launcher, BuildListener listener, Builder buildInstance)
+    public TclDriver(AbstractBuild build, Launcher launcher, BuildListener listener, Builder buildInstance, ITclLogger logger)
             throws TclException {
         this.build = build;
         this.buildLauncher = launcher;
-        this.listener = listener;
+        this.logger = logger;
         this.builderInstance = buildInstance;
 
         // Start init
@@ -99,6 +100,10 @@ public class TclDriver extends jTclTTY {
 
 
         //TODO: add built-in command handlers
+    }
+    
+    public TclDriver(TclBuildStepLogger logger) throws TclException {
+        this(null, null, null, null, logger);
     }
 
     @Override

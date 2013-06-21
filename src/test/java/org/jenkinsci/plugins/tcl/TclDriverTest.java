@@ -26,8 +26,6 @@ package org.jenkinsci.plugins.tcl;
 import hudson.Launcher;
 import hudson.model.AbstractBuild;
 import hudson.model.BuildListener;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -40,16 +38,6 @@ public class TclDriverTest {
     public TclDriverTest() {
     }
 
-    @BeforeClass
-    public static void setUpClass() throws Exception
-    {
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception
-    {
-    }
-
     /**
      * Test of Execute method, of class TclDriver.
      */
@@ -58,7 +46,7 @@ public class TclDriverTest {
     {
         System.out.println("Execute");
         String command = "";
-        TclDriver instance = null;
+        TclDriver instance = new TclDriver();
         String expResult = "";
         String result = instance.Execute(command);
         assertEquals(expResult, result);
@@ -72,7 +60,7 @@ public class TclDriverTest {
     public void testGetBuildListener()
     {
         System.out.println("getBuildListener");
-        TclDriver instance = null;
+        TclDriver instance = new TclDriver();
         BuildListener expResult = null;
         BuildListener result = instance.getBuildListener();
         assertEquals(expResult, result);
