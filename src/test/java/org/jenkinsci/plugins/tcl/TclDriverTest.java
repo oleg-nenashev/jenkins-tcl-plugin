@@ -30,11 +30,13 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 
 /**
  *
  * @author Oleg Nenashev <o.v.nenashev@gmail.com>
  */
+@Ignore
 public class TclDriverTest {
 
     public TclDriverTest() {
