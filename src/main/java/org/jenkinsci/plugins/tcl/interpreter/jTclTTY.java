@@ -46,6 +46,12 @@ public class jTclTTY {
         return interp;
     }
 
+    /**
+     * Initialize wrapper.
+     * @param workingDirectory Path to the initial working directory
+     * @param loader Parent Classloader
+     * @throws TclException Initialization error
+     */
     protected void Initialize(FilePath workingDirectory, ClassLoader loader) throws TclException {
         tempDir = createTempDir();
         Thread.currentThread().setContextClassLoader(loader);
@@ -65,6 +71,12 @@ public class jTclTTY {
         }
     }
 
+    /**
+     * Execute Tcl command
+     * @param command Command(script) to be executed
+     * @return Output string
+     * @throws TclException Execution error
+     */
     public String Execute(String command) throws TclException {
         interp.eval(command);
         return interp.getResult().toString();
@@ -84,7 +96,7 @@ public class jTclTTY {
      * <p/>
      * This file uses code from jTcl samples
      *
-     * @return
+     * @return Path to the temporary directory
      * @throws Exception
      */
     private File createTempDir() throws jTclException {

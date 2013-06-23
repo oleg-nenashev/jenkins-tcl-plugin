@@ -27,7 +27,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- * Implements OutputStream with internal buffering and per-string output
+ * Implements OutputStream with internal buffering and per-string output.
+ * This class is being used as an IO wrapper in jTclTty
+ * @see jTclTTY
  */
 public abstract class StringOutputStream extends OutputStream {
 
