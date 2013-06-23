@@ -52,6 +52,9 @@ import java.io.IOException;
  */
 public class TclScriptBuilder extends Builder {
 
+    /**
+     * Script to be executed.
+     */
     private String script;
     private static final String TEST_SCRIPT = "set a \"Hello, world!\"; puts $a;";
 
