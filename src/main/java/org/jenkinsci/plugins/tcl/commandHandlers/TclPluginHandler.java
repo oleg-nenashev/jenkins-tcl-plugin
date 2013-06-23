@@ -24,7 +24,8 @@
 package org.jenkinsci.plugins.tcl.commandHandlers;
 
 /**
- * Container of build-in Tcl commands
+ * Container of build-in Tcl commands.
+ * @author Oleg Nenashev <o.v.nenashev@gmail.com>
  */
 public enum TclPluginHandler {
     GET_VERSION(TclGetVersion.class);

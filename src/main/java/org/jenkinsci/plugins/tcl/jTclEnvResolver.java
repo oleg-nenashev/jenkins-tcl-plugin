@@ -74,7 +74,7 @@ public class jTclEnvResolver implements Resolver {
                 throw new jTclException("Can't process environment vars", ex);
             }
             
-            // get global properties
+            // Get global properties
             for (NodeProperty nodeProperty: Hudson.getInstance().getGlobalNodeProperties()) {
                 if (nodeProperty instanceof EnvironmentVariablesNodeProperty) {
                     EnvironmentVariablesNodeProperty vars = (EnvironmentVariablesNodeProperty)nodeProperty;
@@ -83,7 +83,7 @@ public class jTclEnvResolver implements Resolver {
                 }
             }
             
-            // get node-specific global properties
+            // Get node-specific global properties
             for (NodeProperty nodeProperty : build.getBuiltOn().getNodeProperties()) {
                 if (nodeProperty instanceof EnvironmentVariablesNodeProperty) {
                                 EnvironmentVariablesNodeProperty vars = (EnvironmentVariablesNodeProperty)nodeProperty;

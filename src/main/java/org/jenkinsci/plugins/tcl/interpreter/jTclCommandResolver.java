@@ -55,16 +55,16 @@ public class jTclCommandResolver implements Resolver {
     }
 
     public void RegisterCommand(ITclCommand command) throws TclException {
-        if (commandSet.containsKey(command.Name())) {
-            throw new TclException(tclInterp, "Key " + command.Name() + " has been already registered");
+        if (commandSet.containsKey(command.getName())) {
+            throw new TclException(tclInterp, "Key " + command.getName() + " has been already registered");
         }
 
         // commandSet.put(command.Name(), command);
     }
 
     public void UnregisterCommand(ITclCommand command) {
-        if (commandSet.containsKey(command.Name())) {
-            commandSet.remove(command.Name());
+        if (commandSet.containsKey(command.getName())) {
+            commandSet.remove(command.getName());
         }
     }
 

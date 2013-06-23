@@ -30,8 +30,7 @@ import tcl.lang.TclException;
 import tcl.lang.TclObject;
 
 /**
- * Wrapper for internal Tcl Command
- *
+ * Wrapper for internal Tcl Commands.
  * @author Oleg Nenashev <o.v.nenashev@gmail.com>
  * @see ITclCommand
  */

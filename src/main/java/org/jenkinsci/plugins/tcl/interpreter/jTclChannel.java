@@ -31,7 +31,6 @@ import tcl.lang.channel.StdChannel;
 
 /**
  * Implements standard IO channels for Tcl interpreter.
- *
  * @author Oleg Nenashev <o.v.nenashev@gmail.com>
  */
 public class jTclChannel extends StdChannel {
@@ -86,6 +85,10 @@ public class jTclChannel extends StdChannel {
         return name;
     }
 
+    /**
+     * Get type of IO channel.
+     * @return Type of the TclChannel
+     */
     public jTclChannelType getType() {
         return type;
     }

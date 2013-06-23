@@ -134,7 +134,7 @@ public class TclDriver extends jTclTTY {
     }
 
     /**
-     * Get builder.
+     * Get builder, which has invoked interpreter.
      * @since 0.5
      * @return Builder, for which interpreter is configured.
      */

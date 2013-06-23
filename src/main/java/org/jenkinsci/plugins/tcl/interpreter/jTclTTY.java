@@ -70,11 +70,11 @@ public class jTclTTY {
         return interp.getResult().toString();
     }
 
-    public File getWorkDirectory() {
+    public final File getWorkDirectory() {
         return interp.getWorkingDir();
     }
 
-    public File getTempDirectory() {
+    public final File getTempDirectory() {
         return tempDir;
     }
 
@@ -84,8 +84,8 @@ public class jTclTTY {
      * <p/>
      * This file uses code from jTcl samples
      *
-     * @return
-     * @throws Exception
+     * @return Path to the temporary directory.
+     * @throws jTclException Temp Directory creation error
      */
     private File createTempDir() throws jTclException {
         //TODO: Add possibility of temp dir configuration

@@ -33,7 +33,7 @@ public enum jTclChannelType {
     STDOUT(StdChannel.STDOUT),
     STDIN(StdChannel.STDIN);
 
-    int value;
+    private int value;
 
     private jTclChannelType(int value) {
         this.value = value;

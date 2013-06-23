@@ -39,8 +39,8 @@ public interface ITclCommand {
     public String Execute(String argStr) throws TclException;
 
     /**
-     *
+     * Get name of the command.
      * @return Command name
      */
-    public String Name();
+    public String getName();
 }

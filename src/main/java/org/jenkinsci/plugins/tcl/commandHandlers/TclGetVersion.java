@@ -24,7 +24,8 @@
 package org.jenkinsci.plugins.tcl.commandHandlers;
 
 /**
- * Command sample
+ * Command sample. 
+ * Returns version of the Tcl plugin.
  */
 public class TclGetVersion implements ITclCommand {
     public static final String COMMAND_NAME = "GetVersion";
@@ -36,7 +37,7 @@ public class TclGetVersion implements ITclCommand {
     }
 
     @Override
-    public String Name() {
+    public String getName() {
         return COMMAND_NAME;
     }
 }
